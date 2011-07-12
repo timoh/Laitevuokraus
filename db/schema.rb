@@ -10,7 +10,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110711190018) do
+ActiveRecord::Schema.define(:version => 20110712174037) do
+
+  create_table "events", :force => true do |t|
+    t.string   "name"
+    t.datetime "start_at"
+    t.datetime "end_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "items", :force => true do |t|
     t.string   "title"
@@ -26,10 +34,10 @@ ActiveRecord::Schema.define(:version => 20110711190018) do
   end
 
   create_table "reservations", :force => true do |t|
-    t.string   "title"
+    t.string   "name"
     t.integer  "user_id"
-    t.datetime "start"
-    t.datetime "end"
+    t.datetime "start_at"
+    t.datetime "end_at"
     t.float    "fee"
     t.datetime "created_at"
     t.datetime "updated_at"

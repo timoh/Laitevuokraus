@@ -12,37 +12,21 @@
   <% end %>
 
 
-  <div class="field">
-    <%= f.label :firstname %><br />
-    <%= f.text_field :firstname %>
-  </div>
-  <div class="field">
-    <%= f.label :lastname %><br />
-    <%= f.text_field :lastname %>
-  </div>
-  <div class="field">
-    <%= f.label :address %><br />
-    <%= f.text_field :address %>
-  </div>
-  <div class="field">
-    <%= f.label :phone %><br />
-    <%= f.text_field :phone %>
-  </div>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.text_field :email %>
-  </div>
 
+<%= raw(event_calendar) %>
 
+<h2>Times for reservation start (gear pickup) and end (gear return)</h2>
 
   <div class="field">
-    <%= f.label :start %><br />
-    <%= f.datetime_select :start, :default => 1.day.from_now  %>
+    <%= f.label :start_at %><br />
+    <%= f.datetime_select :start_at, :default => 1.day.from_now  %>
   </div>
   <div class="field">
-    <%= f.label :end %><br />
-    <%= f.datetime_select :end, :default => 2.day.from_now %>
+    <%= f.label :end_at %><br />
+    <%= f.datetime_select :end_at, :default => 2.day.from_now %>
   </div>
+
+<h2>Gear to be rented</h2>
 
 <% for item in @items %>
 <div>
@@ -50,6 +34,33 @@
   <%= item.title %>, <%= item.price %> &euro;/vrk
 </div>
 <% end %>
+
+
+<h2>Personal details</h2>
+
+<div class="field">
+  <%= f.label :firstname %><br />
+  <%= f.text_field :firstname %>
+</div>
+<div class="field">
+  <%= f.label :lastname %><br />
+  <%= f.text_field :lastname %>
+</div>
+<div class="field">
+  <%= f.label :address %><br />
+  <%= f.text_field :address %>
+</div>
+<div class="field">
+  <%= f.label :phone %><br />
+  <%= f.text_field :phone %>
+</div>
+<div class="field">
+  <%= f.label :email %><br />
+  <%= f.text_field :email %>
+</div>
+
+
+
 
   <div class="actions">
     <%= f.submit %>

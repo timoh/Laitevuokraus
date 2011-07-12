@@ -2,6 +2,15 @@ class ReservationsController < ApplicationController
   # GET /reservations
   # GET /reservations.xml
   def index
+    
+    @month = (params[:month] || (Time.zone || Time).now.month).to_i
+    @year = (params[:year] || (Time.zone || Time).now.year).to_i
+
+    @shown_month = Date.civil(@year, @month)
+
+    @event_strips = Reservation.event_strips_for_month(@shown_month)
+    
+    
     @reservations = Reservation.all
 
     respond_to do |format|
@@ -25,6 +34,14 @@ class ReservationsController < ApplicationController
   # GET /reservations/new
   # GET /reservations/new.xml
   def new
+    @month = (params[:month] || (Time.zone || Time).now.month).to_i
+    @year = (params[:year] || (Time.zone || Time).now.year).to_i
+
+    @shown_month = Date.civil(@year, @month)
+
+    @event_strips = Reservation.event_strips_for_month(@shown_month)
+    
+    
     @items = Item.all
     @reservation = Reservation.new
 
@@ -36,6 +53,14 @@ class ReservationsController < ApplicationController
 
   # GET /reservations/1/edit
   def edit
+    
+    @month = (params[:month] || (Time.zone || Time).now.month).to_i
+    @year = (params[:year] || (Time.zone || Time).now.year).to_i
+
+    @shown_month = Date.civil(@year, @month)
+
+    @event_strips = Reservation.event_strips_for_month(@shown_month)
+    
     @reservation = Reservation.find(params[:id])
     @items = Item.all
   end
@@ -43,6 +68,14 @@ class ReservationsController < ApplicationController
   # POST /reservations
   # POST /reservations.xml
   def create
+    
+    @month = (params[:month] || (Time.zone || Time).now.month).to_i
+    @year = (params[:year] || (Time.zone || Time).now.year).to_i
+
+    @shown_month = Date.civil(@year, @month)
+
+    @event_strips = Reservation.event_strips_for_month(@shown_month)
+    
     @reservation = Reservation.new(params[:reservation])
 
 
@@ -62,6 +95,14 @@ class ReservationsController < ApplicationController
   # PUT /reservations/1
   # PUT /reservations/1.xml
   def update
+    
+    @month = (params[:month] || (Time.zone || Time).now.month).to_i
+    @year = (params[:year] || (Time.zone || Time).now.year).to_i
+
+    @shown_month = Date.civil(@year, @month)
+
+    @event_strips = Reservation.event_strips_for_month(@shown_month)
+    
     @reservation = Reservation.find(params[:id])
 
     respond_to do |format|

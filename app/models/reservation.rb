@@ -1,32 +1,45 @@
 class Reservation < ActiveRecord::Base
   
+  has_event_calendar
+  
   belongs_to :user
   has_and_belongs_to_many :items
   
   before_validation :calculate_fee
+  before_validation :generate_name
+  validates_presence_of :name
   validate :must_have_one_item
   validate :date_at_least_today
   validate :ensure_duration_positive
   validate :fee_must_be_at_least_1_time
   validate :no_overlap_for_items
-  validates_presence_of :start, :end; :fee
+  validates_presence_of :start_at, :end_at; :fee
   
   #boring validations
   validates_presence_of :firstname 
   #validates_presence_of :lastname, :address, :phone, :email, 
   
-  
-
-  
   protected
   
     def duration
-      return (self.end-self.start)/60/60/24.ceil.to_i
+      return (self.end_at-self.start_at)/60/60/24.ceil.to_i
+    end
+    
+    def generate_name
+      
+      self.name = ""
+      
+      for item in self.items
+        self.name = self.name+item.title+" "
+      end
+      
+      self.name = self.name+" are being rented"
+      
     end
     
     def date_at_least_today
-      errors.add(:start, "must be at least present moment") if
-        self.start < Time.now
+      errors.add(:start_at, "must be at least present moment") if
+        self.start_at < Time.now
     end
     
     def must_have_one_item
@@ -36,7 +49,7 @@ class Reservation < ActiveRecord::Base
   
   
     def ensure_duration_positive
-      errors.add(:end, "must be after start") if
+      errors.add(:end_at, "must be after start") if
         duration <= 0
     end
     
@@ -59,27 +72,21 @@ class Reservation < ActiveRecord::Base
       reservations = Reservation.all
       
       for reservation in reservations
-        #puts "A reservation between :"+reservation.start.to_s+" and "+reservation.end.to_s+" with items: "+reservation.items.to_json
         
         #does the reservation being compared have the same item?
         for item in reservation.items
           if self.items.include?(item)
-            #puts "Item included!"
-            
-            #is the included item also in use in the same time?
-            
-            #starting before and lasting at least partially some time in overlap
-              if ((reservation.start - self.end) * (self.start - reservation.end) >= 0)
+              
+              #is the included item also in use in the same time?
+              if ((reservation.start_at - self.end_at) * (self.start_at - reservation.end_at) >= 0)
                 overlap = true
               end
                 
           end
         end
-        
-
       end
       
-      errors.add(:start, "There is a prior reservation for this equipment during this time") if
+      errors.add(:start_at, "There is a prior reservation for this equipment during this time") if
         overlap == true
         
     end
