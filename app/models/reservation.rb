@@ -25,8 +25,8 @@ class Reservation < ActiveRecord::Base
     end
     
     def date_at_least_today
-      errors.add(:start, "must be at least today") if
-        self.start < Date.today
+      errors.add(:start, "must be at least present moment") if
+        self.start < Time.now
     end
     
     def must_have_one_item
@@ -69,14 +69,10 @@ class Reservation < ActiveRecord::Base
             #is the included item also in use in the same time?
             
             #starting before and lasting at least partially some time in overlap
-            if reservation.start <= self.start and reservation.end >= self.end
-              overlap = true
-            end
-            
-            #starting after and lasting at least partially before end
-            if reservation.start >= self.start and reservation.end <= self.end
-              overlap = true
-            end
+              if ((reservation.start - self.end) * (self.start - reservation.end) >= 0)
+                overlap = true
+              end
+                
           end
         end
         
