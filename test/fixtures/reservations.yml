@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  title: MyString
+  user_id: 1
+  start: 2011-07-11 20:00:29
+  end: 2011-07-11 20:00:29
+  fee: 1.5
+
+two:
+  title: MyString
+  user_id: 1
+  start: 2011-07-11 20:00:29
+  end: 2011-07-11 20:00:29
+  fee: 1.5
