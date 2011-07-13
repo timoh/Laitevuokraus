@@ -17,7 +17,7 @@ class Reservation < ActiveRecord::Base
   
   #boring validations
   validates_presence_of :firstname 
-  #validates_presence_of :lastname, :address, :phone, :email, 
+  validates_presence_of :lastname, :address, :phone, :email, 
   
   protected
   

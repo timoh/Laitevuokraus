@@ -4,6 +4,8 @@ Laitevuokraus::Application.routes.draw do
   resources :reservations
 
   resources :items
+  
+  root :to => "reservations#index"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
