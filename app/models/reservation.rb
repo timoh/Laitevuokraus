@@ -5,14 +5,14 @@ class Reservation < ActiveRecord::Base
   belongs_to :user
   has_and_belongs_to_many :items
   
-  before_validation :calculate_fee
+  before_save :calculate_fee
   before_validation :generate_name
   validates_presence_of :name
   validate :must_have_one_item
   validate :date_at_least_today
   validate :ensure_duration_positive
   validate :fee_must_be_at_least_1_time
-  validate :no_overlap_for_items
+  before_create :no_overlap_for_items
   validates_presence_of :start_at, :end_at; :fee
   
   #boring validations
@@ -56,12 +56,16 @@ class Reservation < ActiveRecord::Base
     def fee_must_be_at_least_1_time
 
     end
+    
   
     def calculate_fee
       fee = 0.to_f
       for item in self.items 
         fee = fee+item.price*duration.to_f
       end
+    
+      #round fee to closest integer, typecast back to float
+      fee = fee.ceil.to_f
     
       self.fee = fee
     

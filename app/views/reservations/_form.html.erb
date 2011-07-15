@@ -59,10 +59,7 @@
   <%= f.text_field :email %>
 </div>
 
-
-
-
   <div class="actions">
-    <%= f.submit %>
+    <%= submit_tag "Submit!", :confirm => "The reservation is binding – Are you sure you want to submit the reservation?" %>
   </div>
 <% end %>

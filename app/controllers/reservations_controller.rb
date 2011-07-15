@@ -104,6 +104,8 @@ class ReservationsController < ApplicationController
     @event_strips = Reservation.event_strips_for_month(@shown_month)
     
     @reservation = Reservation.find(params[:id])
+    @items = @reservation.items
+    
 
     respond_to do |format|
       if @reservation.update_attributes(params[:reservation])
