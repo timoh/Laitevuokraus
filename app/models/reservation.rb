@@ -15,9 +15,11 @@ class Reservation < ActiveRecord::Base
   before_create :no_overlap_for_items
   validates_presence_of :start_at, :end_at; :fee
   
+  
   #boring validations
   validates_presence_of :firstname 
   validates_presence_of :lastname, :address, :phone, :email 
+  validates_length_of :phone, :minimum => 6
   
   protected
   
